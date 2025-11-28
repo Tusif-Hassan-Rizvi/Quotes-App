@@ -11,3 +11,9 @@ pnpm dev
 # or
 bun dev
 ```
+
+## API Reference  
+
+```bash
+https://api-ninjas.com/api/quotes
+```
