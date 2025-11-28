@@ -114,8 +114,6 @@ export default function MainBox() {
             setIsLoading(false);
             setAllQuotes(data[0]);
 
-            console.log(data);
-
         } catch (error) {
 
         } finally {
@@ -125,34 +123,39 @@ export default function MainBox() {
     return (
         <div className='w-full p-5'>
             <div className="flex items-center justify-center w-full">
-                <div className="p-10 bg-gray-200 w-full min-h-[250px] rounded-md flex items-center justify-center gap-3 flex-col">
-                    <div className="w-full flex items-start justify-start flex-col">
-                        <div className="font-bold mb-1 text-sm">Select Quotes Category</div>
-                        <select className="py-2 px-3 border-green-300 border" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                            console.log(e.target.value);
-                            setSelectedCategories(e.target.value)
-                        }}>
-                            <option value="">Random</option>
-                            {
-                                QuotesCategories && QuotesCategories?.map((val: SelectCatogiesType, index: number) => <option key={val.id} value={val?.value}>{val?.categorie}</option>)
+                <div className="md:p-10 w-full min-h-[250px] rounded-md flex items-center justify-center gap-3 flex-col">
+
+                    <div className="w-full flex flex-row gap-5 items-end justify-center">
+                        <div className="flex items-start justify-start flex-col">
+                            <div className="font-medium mb-2 ml-4 text-[11px]  text-[#666] uppercase tracking-wide">Category</div>
+                            <select className="py-2 px-3 h-10 bg-[#f5f5f5] border-[1px solid #e0e0e0] text-[#333] text-[14px] rounded-[3px] cursor-pointer hover:bg-gray-200" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                                setSelectedCategories(e.target.value)
+                            }}>
+                                <option value="">Random</option>
+                                {
+                                    QuotesCategories && QuotesCategories?.map((val: SelectCatogiesType, index: number) => <option key={val.id} value={val?.value}>{val?.categorie}</option>)
+                                }
+                            </select>
+
+                        </div>
+                        <button className="bg-[#333] text-white items-center py-3 px-10 transition-all ease-in-out duration-300 cursor-pointer h-10 flex justify-center border-0 text-[13px] rounded-[3px] uppercase tracking-normal hover:bg-[#333333e1]" onClick={() => {
+                            if (!isLoading) {
+                                fetchQuotes();
+                            } else {
+                                return;
                             }
-                        </select>
-
+                        }} >Generate</button>
                     </div>
-                    <button className="bg-green-600 text-white items-center justify-center font-semibold p-3 rounded-md hover:bg-green-500 transition-all ease-in-out duration-300 cursor-pointer active:bg-green-400" onClick={() => {
-                        if (!isLoading) {
-                            fetchQuotes();
-                        } else {
-                            return;
-                        }
-                    }} >Generate Quotes</button>
 
-                    <div className="w-full text-center">
+
+
+                    <div className="w-full text-center min-h-[100px] mt-6">
                         {
-                            isLoading ? "Loading..." : <div>
+                            isLoading ? "Loading..." : <div className="flex items-center justify-center flex-col">
                                 {allQuotes ? <>
-                                    <p>“{allQuotes?.quote}“</p>
-                                    <div className="flex items-center justify-end text-xs font-bold">{allQuotes?.author
+                                    <div className="w-10 h-0.5 bg-[#333] mb-[25px]"></div>
+                                    <p className="text-[20px] leading-8 text-[#333] font-light tracking-normal mb-[25px] max-w-[650px]">❝ {allQuotes?.quote} ❞</p>
+                                    <div className="flex items-center justify-end text-[12px]  text-[#999] tracking-normal uppercase font-normal"><span className="font-semibold text-gray-600 pr-1">—</span> {allQuotes?.author
                                     }</div>
                                 </> : null}
                             </div>
